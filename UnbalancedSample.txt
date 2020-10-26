@@ -1,0 +1,19 @@
+class GenQueue
+{
+  public:
+    GenQueue(); //states unbalanced delim of '{' AND '}' on line 11
+  private:
+    int front; //AKA head
+    int rear; //AKA tail
+    int mSize;
+    int numElements;
+    char *myQueue; //pointer to a char - array
+};
+GenQueue::GenQueue( //if left parn missing, says problem on line 20
+{
+  myQueue = new char [128]; //states unbalanced delim of '{' AND '}' on line 19
+  mSize = 128;
+  front = 0;
+  rear = -1;
+  numElements = 0;
+}
