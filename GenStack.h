@@ -28,11 +28,15 @@ class GenStack
     bool isFull();
     bool isEmpty();
     int getSize();
+    T GenStackResize(T newSize);
+
+    int mSize;
+    T *myArray;
 
   private:
-    T *myArray;
+    //T *myArray;
     int top;
-    int mSize;
+
 
 };
 
@@ -70,6 +74,7 @@ T GenStack<T>::push(T data)
   {
     cout << "ERROR: stack is full" << endl;
     //this is where we will possibly send it to create a copy of stack w/ increased size
+    //resize(mSize * 2);
   }
   myArray[++top] = data;
 }
@@ -86,21 +91,24 @@ T GenStack<T>::pop()
 }
 //function to create a new stack
 //this will be a copy of the original, but allocate more space to it
-/*
+
 template <class T>
-GenStack<T>::GenStackResize(int newSize)
+T GenStack<T>::GenStackResize(T newSize)
 {
-  maxSize = newSize;
-  T* copy = new T[maxSize];
+  mSize = newSize;
+  T * copy = new T[mSize];
+  copy = myArray;
+  /*
   for (int i = 0; i < top; i++)
     copy[i] = arr[i];
-  //msize = maxSize + BOUND;
+  */
   delete [] myArray;
-  myArray = new T[maxSize];
+  myArray = new T[mSize];
   myArray = copy;
   delete[] copy;
 }
-*/
+
+
 template <class T>
 T GenStack<T>::peek()
 {
@@ -180,7 +188,7 @@ bool GenStack<T>::balanceCheck(ifstream &infile)
       //add while myStack is not full, push
       //if full allocate more memory to it
       myStack->push(c);
-      cout << "push " <<  c << endl;
+      //cout << "push " <<  c << endl;
       //cout << "Placement 1" << endl;
     }
     //makes c be the right hand delimiter
@@ -192,7 +200,7 @@ bool GenStack<T>::balanceCheck(ifstream &infile)
       if (myStack->isEmpty())
       {
         //cout << "Placement 2" << endl;
-        cout << "Stack empty. Unballanced delimiter " << c << " on line: " << linenumber << endl;
+        cout << "Stack empty. UNBALANCED delimiter " << c << " on line: " << linenumber << endl;
         match = false;
         break;
       }
@@ -213,7 +221,7 @@ bool GenStack<T>::balanceCheck(ifstream &infile)
       if (!matchingDelims(c,d))
       {
         //cout << "Placement 4" << endl;
-        cout << "Unbalanced " << c << " delimiter at line: " << linenumber << endl;
+        cout << "UNBALANCED " << c << " delimiter at line: " << linenumber << endl;
         cout << "Line: " << linenumber << " expected " << d << endl;
         match = false;
         break;
@@ -225,17 +233,17 @@ bool GenStack<T>::balanceCheck(ifstream &infile)
   if (!myStack->isEmpty())
   {
     //cout << "Placement 5" << endl;
-    cout << "Unbalanced delimiter " << myStack->peek() << " on line: " << linenumber <<endl;
+    cout << "UNBALANCED delimiter " << myStack->peek() << " on line: " << linenumber <<endl;
     cout << "Expected " << d << " to be on line " << linenumber << endl;
     match = false;
   }
   if (match == true){
     //cout << "Placement 6" << endl;
-    cout << "The delimiters are balanced and match up with each other. " << endl;
+    cout << "The delimiters ARE BALANCED and match up with each other. " << endl;
   }
   else{
     //cout << "Placement 7" << endl;
-    cout << "The delimiters are unbalanced and do not match up with each other. " << endl;
+    cout << "The delimiters ARE UNBALANCED and do not match up with each other. " << endl;
     //return false;
   }
   delete myStack;
